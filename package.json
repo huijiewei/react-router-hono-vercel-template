@@ -22,7 +22,7 @@
     "@react-router/dev": "^7.1.0",
     "@resolid/config": "^3.0.2",
     "@resolid/flex-routes": "^1.1.2",
-    "@resolid/react-router-hono": "^1.1.0",
+    "@resolid/react-router-hono": "^1.1.1",
     "@tailwindcss/vite": "^4.0.0-beta.8",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
