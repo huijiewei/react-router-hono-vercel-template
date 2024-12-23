@@ -8,12 +8,13 @@ export default {
   presets: [
     env.VERCEL == "1"
       ? vercelPreset({
-          runtime: 22,
           regions: ["sin1"],
           entryFile: "server.vercel.ts",
+          nodeVersion: 22,
         })
       : nodePreset({
           entryFile: "server.node.ts",
+          nodeVersion: 22,
         }),
   ],
 } satisfies Config;
