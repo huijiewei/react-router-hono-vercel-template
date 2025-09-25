@@ -17,4 +17,9 @@ export default {
           nodeVersion: 22,
         }),
   ],
+  future: {
+    unstable_optimizeDeps: true,
+    unstable_splitRouteModules: true,
+    unstable_viteEnvironmentApi: true,
+  },
 } satisfies Config;

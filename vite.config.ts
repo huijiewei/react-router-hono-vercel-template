@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig(({ isSsrBuild }) => {
+export default defineConfig(() => {
   return {
     plugins: [
       reactRouterHonoServer({
@@ -14,31 +14,41 @@ export default defineConfig(({ isSsrBuild }) => {
       tailwindcss(),
       tsconfigPaths(),
     ].filter(Boolean),
+    environments: {
+      ssr: {
+        build: {
+          target: "node22",
+          rollupOptions: {
+            output: {
+              hoistTransitiveImports: false,
+              manualChunks: undefined,
+            },
+          },
+        },
+      },
+    },
     build: {
-      target: isSsrBuild ? "node22" : "modules",
-      cssTarget: ["edge88", "firefox78", "chrome87", "safari14"],
       rollupOptions: {
         output: {
-          manualChunks: isSsrBuild
-            ? undefined
-            : (id) => {
-                if (
-                  id.includes("/node_modules/react/") ||
-                  id.includes("/node_modules/react-dom/") ||
-                  id.includes("/node_modules/react-is/") ||
-                  id.includes("/node_modules/scheduler/")
-                ) {
-                  return "react";
-                }
+          manualChunks: (id) => {
+            if (
+              id.includes("/node_modules/react/") ||
+              id.includes("/node_modules/react-dom/") ||
+              id.includes("/node_modules/react-is/") ||
+              id.includes("/node_modules/scheduler/")
+            ) {
+              return "react";
+            }
 
-                if (
-                  id.includes("/node_modules/react-router/") ||
-                  id.includes("react-router/with-props") ||
-                  id.includes("/node_modules/turbo-stream/")
-                ) {
-                  return "react-router";
-                }
-              },
+            if (
+              id.includes("/node_modules/@react-router/") ||
+              id.includes("/node_modules/react-router/") ||
+              id.includes("/node_modules/turbo-stream/") ||
+              id.includes("react-router/with-props")
+            ) {
+              return "react-router";
+            }
+          },
         },
       },
     },
